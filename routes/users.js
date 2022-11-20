@@ -6,7 +6,15 @@
  */
 
 const express = require('express');
+const { sendMail, generateRandomString } = require('../lib/helpers.js')
 const router  = express.Router();
+const poll = {
+      id: 'sedrg4b',
+      email: 'tbekishev@gmail.com',
+      question: 'What movie are we watching this Friday?',
+      options: ['Matrix 7', 'Interstellar 3', 'Die Hard 10'],
+      receivers: 'rahimj2196@gmail.com'
+      }
 
 router.get('/', (req, res) => {
   res.render('users');
@@ -14,22 +22,8 @@ router.get('/', (req, res) => {
 
 router.post('/poll', (req, res) => {
   console.log(req.body)
-  const api_key = '';
-  const domain = 'sandbox2d3ff9f87e114f8692c8bc1a7e404057.mailgun.org';
-  const mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
-
-  const data = {
-    from: req.body.email,
-    to: req.body.emails,
-    subject: 'Testing Decision Maker',
-    text: `${req.body.question}`
-  };
-
-  mailgun.messages().send(data, function (error, body) {
-    if (error) {
-      console.log(error);
-    }
-    console.log(body);
-  });
+  console.log(generateRandomString(10))
+  res.json(req.body)
+  sendMail(req.body);
 })
 module.exports = router;
