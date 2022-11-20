@@ -25,26 +25,26 @@
     <nav>
       <h1> Decision Maker </h1>
     </nav>
-    <form class="form-container">
+    <form class="form-container" method="POST" action="/users/poll">
       <div class="form-group">
         <label for="exampleFormControlInput1">Email address</label>
-        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+        <input name="email" type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
       </div>
       <div class="form-group">
         <label for="exampleFormControlSelect1">Ask your question?</label>
-        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Write question here.">
+        <input name="question" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Write question here.">
         </select>
       </div>
       <div class="form-group">
         <label for="exampleFormControlSelect2">Choose your options!</label>
-        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Option 1">
-        <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="Option 2">
+        <input name="option1" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Option 1">
+        <input name="option2" type="text" class="form-control" id="exampleFormControlInput2" placeholder="Option 2">
         <button type="submit" class="btn btn-primary">Add more options!</button>
         </select>
       </div>
       <div class="form-group">
         <label for="exampleFormControlTextarea1">Enter the Email of the person you would like to send this poll too!</label>
-        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="If you would like to send to multiple users, please seperate with ','!">
+        <input name="emails" type="text" class="form-control" id="exampleFormControlInput1" placeholder="If you would like to send to multiple users, please seperate with ','!">
       </div>
       <button type="submit" class="btn btn-primary">SUBMIT</button>
     </form>
