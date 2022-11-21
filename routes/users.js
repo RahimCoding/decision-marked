@@ -9,12 +9,13 @@ const express = require('express');
 const { sendMail, generateRandomString } = require('../lib/helpers.js')
 const router  = express.Router();
 const poll = {
-      id: 'sedrg4b',
-      email: 'tbekishev@gmail.com',
-      question: 'What movie are we watching this Friday?',
-      options: ['Matrix 7', 'Interstellar 3', 'Die Hard 10'],
-      receivers: ['rahimj2196@gmail.com']
-      }
+  url_id: 'sedrg4b',
+  email: 'tbekishev@gmail.com',
+  question: 'What movie are we watching this Friday?',
+  options: ['Matrix 7', 'Interstellar 3', 'Die Hard 10'],
+  receivers: ['rahimj2196@gmail.com'],
+  ranks: [2,4,1]
+  }
 let newPoll = {};
 
 /*router.get('/', (req, res) => {
@@ -50,7 +51,7 @@ router.get("/poll/:id", (req, res) => {
 });
 
 router.get("/poll/:id/result", (req, res) => {
-  res.json(newPoll);
+  res.json(poll);
 });
 
 module.exports = router;
