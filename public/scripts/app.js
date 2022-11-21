@@ -1,6 +1,5 @@
 // Client facing scripts here
 $(document).ready(function () {
-  console.log(window.location.pathname)
   let i = 2;
 
   const poll = {
@@ -10,7 +9,6 @@ $(document).ready(function () {
     options: ['Matrix 7', 'Interstellar 3', 'Die Hard 10'],
     receivers: ['rahimj2196@gmail.com']
     }
-    console.log(poll)
   const buttonOption = function () {
     i++;
     let $optionString = $(`<input class="form-control">`)

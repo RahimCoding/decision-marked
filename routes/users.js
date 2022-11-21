@@ -15,10 +15,11 @@ const poll = {
       options: ['Matrix 7', 'Interstellar 3', 'Die Hard 10'],
       receivers: ['rahimj2196@gmail.com']
       }
+let newPoll = {};
 
-router.get('/', (req, res) => {
+/*router.get('/', (req, res) => {
   res.render('users');
-});
+});*/
 
 router.post('/poll', (req, res) => {
   const options = [];
@@ -33,7 +34,7 @@ router.post('/poll', (req, res) => {
 
   const receivers = req.body.receivers.split(/,\s*/g);
 
-  const newPoll = {
+  newPoll = {
     url_id: generateRandomString(12),
     email: req.body.email,
     question: req.body.question,
@@ -41,8 +42,7 @@ router.post('/poll', (req, res) => {
     receivers
   }
   console.log(newPoll)
-
-  res.redirect(`/poll/${poll.id}/result`);
+  res.redirect(`/poll/${newPoll.url_id}/result`);
 })
 
 router.get("/poll/:id", (req, res) => {
@@ -50,7 +50,7 @@ router.get("/poll/:id", (req, res) => {
 });
 
 router.get("/poll/:id/result", (req, res) => {
-  res.json(poll.options, poll.question);
+  res.json(newPoll);
 });
 
 module.exports = router;
