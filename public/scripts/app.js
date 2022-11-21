@@ -1,22 +1,31 @@
 // Client facing scripts here
 $(document).ready(function () {
-  let count = 2;
+  console.log(window.location.pathname)
+  let i = 2;
+
+  const poll = {
+    id: 'sedrg4b',
+    email: 'tbekishev@gmail.com',
+    question: 'What movie are we watching this Friday?',
+    options: ['Matrix 7', 'Interstellar 3', 'Die Hard 10'],
+    receivers: ['rahimj2196@gmail.com']
+    }
+    console.log(poll)
   const buttonOption = function () {
-    count++;
+    i++;
     let $optionString = $(`<input class="form-control">`)
-      .attr('id', 'exampleFormControlInput' + count)
-      .attr('name', 'option' + count)
+      .attr('name', 'option' + i)
       .attr('type', 'text')
-      .attr('placeholder' ,'option ' + count);
+      .attr('id', 'exampleFormControlInput' + i)
+      .attr('placeholder' ,'option ' + i);
     $("#options").append($optionString);
   };
+
   $("#button").click(function (event) {
     event.stopPropagation();
     buttonOption();
   });
-
-}
-);
+});
 
 
 

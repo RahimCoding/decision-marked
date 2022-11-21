@@ -13,7 +13,7 @@ const poll = {
       email: 'tbekishev@gmail.com',
       question: 'What movie are we watching this Friday?',
       options: ['Matrix 7', 'Interstellar 3', 'Die Hard 10'],
-      receivers: 'rahimj2196@gmail.com'
+      receivers: ['rahimj2196@gmail.com']
       }
 
 router.get('/', (req, res) => {
@@ -21,9 +21,36 @@ router.get('/', (req, res) => {
 });
 
 router.post('/poll', (req, res) => {
-  console.log(req.body)
-  console.log(generateRandomString(10))
-  res.json(req.body)
-  sendMail(req.body);
+  const options = [];
+  const keys = Object.keys(req.body);
+  const values = Object.values(req.body);
+
+  keys.forEach((element, index) => {
+    if (element.includes('opti')) {
+      options.push(values[index]);
+    }
+  });
+
+  const receivers = req.body.receivers.split(/,\s*/g);
+
+  const newPoll = {
+    url_id: generateRandomString(12),
+    email: req.body.email,
+    question: req.body.question,
+    options,
+    receivers
+  }
+  console.log(newPoll)
+
+  res.redirect(`/poll/${poll.id}/result`);
 })
+
+router.get("/poll/:id", (req, res) => {
+  res.json(poll);
+});
+
+router.get("/poll/:id/result", (req, res) => {
+  res.json(poll.options, poll.question);
+});
+
 module.exports = router;
