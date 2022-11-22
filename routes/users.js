@@ -16,7 +16,7 @@ const poll = {
   options: ['Matrix 7', 'Interstellar 3', 'Die Hard 10'],
   receivers: ['rahimj2196@gmail.com'],
   ranks: [1,1,1]
-  }
+};
 let newPoll = {};
 
 /*router.get('/', (req, res) => {
@@ -48,7 +48,10 @@ router.post('/poll', (req, res) => {
 })
 
 router.get("/poll/:id", (req, res) => {
-  const query = `SELECT * FROM polls WHERE url = '${req.params.id}'`;
+  const query = `SELECT * FROM polls
+                  INNER JOIN polls_options on polls.id = polls_id
+                  WHERE url = '${req.params.id}'
+                  ORDER BY ranking`;
   db.query(query)
     .then(data => {
       const poll = data.rows;
@@ -62,7 +65,10 @@ router.get("/poll/:id", (req, res) => {
 });
 
 router.get("/poll/:id/result", (req, res) => {
-  const query = `SELECT * FROM polls WHERE url = '${req.params.id}'`;
+  const query = `SELECT * FROM polls
+  INNER JOIN polls_options on polls.id = polls_id
+  WHERE url = '${req.params.id}'
+  ORDER BY ranking`;
   db.query(query)
     .then(data => {
       const poll = data.rows;
@@ -74,5 +80,31 @@ router.get("/poll/:id/result", (req, res) => {
         .json({ error: err.message });
     });
 });
+
+router.put("/poll/:id", (req, res) => {
+  const query = `SELECT * FROM polls WHERE url = '${req.params.id}'`;
+  db.query(query)
+    .then(data => {
+      const poll = data.rows[0].id;
+      for (const key in req.body) {
+        let ranking = key + 1;
+        let option = req.body[key];
+        db.query(`UPDATE polls_options
+        SET ranking = $1
+        WHERE option = $2 AND
+              polls_id = $3;`, [ranking,option,poll]);
+      }
+      console.log("poll3", poll);
+      res.json({ poll });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+  console.log(req.body);
+});
+
+
 
 module.exports = router;

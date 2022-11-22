@@ -2,15 +2,17 @@ $(document).ready(function () {
 
 
   const getOptions = function() {
+    console.log("/users" , window.location.pathname);
     $.ajax({
       method: "GET",
       url: "/users" + window.location.pathname
     }).done((data) => {
       const poll = data.poll[0];
-      $('.poll').append('<ul id = "sort"></ul>');
+      console.log("poll", data);
+      $('.poll').append('<ol id = "sort"></ol>');
       console.log(poll.option);
-      poll.option.forEach((element, index) => {
-        $('#sort').append(`<li id = ${element}>${element}</li>`);
+      data.poll.reverse().forEach((element, index) => {
+        $('#sort').append(`<li id = ${element.option}>${element.option}</li>`);
       });
       $('.poll').append(`<button id = "choice" type = "button">Submit your results!</button>`);
       $('#sort').sortable();
@@ -24,6 +26,11 @@ $(document).ready(function () {
         console.log(sReverse);
         let obj = Object.assign({}, sReverse);
         console.log(obj);
+        $.ajax({
+          method: "PUT",
+          url: "/users" + window.location.pathname,
+          data: obj
+        });
       });
     });
   };
