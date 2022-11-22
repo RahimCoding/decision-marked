@@ -8,6 +8,7 @@
 const express = require('express');
 const { sendMail, generateRandomString } = require('../lib/helpers.js')
 const router  = express.Router();
+const db = require('../db/connection');
 const poll = {
   url_id: 'sedrg4b',
   email: 'tbekishev@gmail.com',
@@ -47,11 +48,31 @@ router.post('/poll', (req, res) => {
 })
 
 router.get("/poll/:id", (req, res) => {
-  res.json(poll);
+  const query = `SELECT * FROM polls WHERE url = '${req.params.id}'`;
+  db.query(query)
+    .then(data => {
+      const poll = data.rows;
+      res.json({ poll });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
 });
 
 router.get("/poll/:id/result", (req, res) => {
-  res.json(poll);
+  const query = `SELECT * FROM polls WHERE url = '${req.params.id}'`;
+  db.query(query)
+    .then(data => {
+      const poll = data.rows;
+      res.json({ poll });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
 });
 
 module.exports = router;
