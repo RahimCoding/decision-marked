@@ -3,10 +3,6 @@ INSERT INTO polls (email, question, url, sent_email) VALUES('jacksonrose@hotmail
 INSERT INTO polls (email, question, url, sent_email) VALUES('victoriablackwell@outlook.com', 'Where are we going next summer?','o4ik5yyIOs54','{"emilyowen@live.com","charliebattle@yahoo.com","miasutton@aol.com","bellaanthony@gmail.com","gabriellabarrera@aol.com"}');
 
 
-
-
-
-
 INSERT INTO polls_options (option, ranking, polls_id) VALUES ('Ring-ding-ding', 1, 1);
 INSERT INTO polls_options (option, ranking, polls_id) VALUES ('Wa-pa-pa', 2, 1);
 INSERT INTO polls_options (option, ranking, polls_id) VALUES ('Hatee-hate', 3, 1);
@@ -21,3 +17,4 @@ INSERT INTO polls_options (option, ranking, polls_id) VALUES ('cuba', 1, 3);
 INSERT INTO polls_options (option, ranking, polls_id) VALUES ('dominicana', 2, 3);
 INSERT INTO polls_options (option, ranking, polls_id) VALUES ('miami', 3, 3);
 INSERT INTO polls_options (option, ranking, polls_id) VALUES ('cancun', 4, 3);
+

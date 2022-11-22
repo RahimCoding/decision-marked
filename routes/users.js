@@ -27,7 +27,7 @@ router.post('/poll', (req, res) => {
   const options = [];
   const keys = Object.keys(req.body);
   const values = Object.values(req.body);
-
+  console.log("req",req.body);
   keys.forEach((element, index) => {
     if (element.includes('opti')) {
       options.push(values[index]);
@@ -42,10 +42,16 @@ router.post('/poll', (req, res) => {
     question: req.body.question,
     options,
     receivers
-  }
-  console.log(newPoll)
+  };
+  console.log("new:" ,newPoll);
+  db.query(`INSERT INTO polls (email, question, url, sent_email) VALUES($1,$2,$3,$4) RETURNING *;`, [newPoll.email, newPoll.question, newPoll.url_id, newPoll.receivers]).then(data => {
+    let pollId = data.rows[0].id;
+    for (let i = 0; i < newPoll.options.length; i++) {
+      db.query(`INSERT INTO polls_options (option, ranking, polls_id) VALUES ($1,$2,$3);`, [newPoll.options[i], 0, pollId]);
+    }
+  });
   res.redirect(`/poll/${newPoll.url_id}/result`);
-})
+});
 
 router.get("/poll/:id", (req, res) => {
   const query = `SELECT * FROM polls
@@ -104,6 +110,7 @@ router.put("/poll/:id", (req, res) => {
     });
   console.log(req.body);
 });
+
 
 
 

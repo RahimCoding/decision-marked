@@ -24,14 +24,17 @@ $(document).ready(function () {
           poll.ranking[parseInt(element)] += index;
         });
         console.log(sReverse);
+        console.log("poll[o]:",poll.url);
         let obj = Object.assign({}, sReverse);
-        console.log(obj);
+        console.log("obj:",obj);
         $.ajax({
           method: "PUT",
           url: "/users" + window.location.pathname,
           data: obj
         });
+        window.location.href = `/poll/${poll.url}/result`;
       });
+
     });
   };
 
