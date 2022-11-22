@@ -14,7 +14,7 @@ const poll = {
   question: 'What movie are we watching this Friday?',
   options: ['Matrix 7', 'Interstellar 3', 'Die Hard 10'],
   receivers: ['rahimj2196@gmail.com'],
-  ranks: [2,4,1]
+  ranks: [1,1,1]
   }
 let newPoll = {};
 

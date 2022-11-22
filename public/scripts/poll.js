@@ -15,7 +15,11 @@ $(document).ready(function () {
 
     $("#choice").on('click', () =>  {
       const s = $('#sort').sortable('toArray')
-      console.log(s);
+      const sReverse = s.reverse();
+      sReverse.forEach((element, index) => {
+        data.ranks[parseInt(element)] += index;
+      });
+      console.log(data.ranks)
     });
   });
 }
