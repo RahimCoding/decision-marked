@@ -6,7 +6,7 @@
  */
 
 const express = require('express');
-const { sendMail, generateRandomString, sendPoll } = require('../lib/helpers.js')
+const { sendMail, generateRandomString, sendPoll, sendNotification } = require('../lib/helpers.js')
 const router  = express.Router();
 const db = require('../db/connection');
 const poll = {
@@ -91,7 +91,7 @@ router.get("/poll/:id/result", (req, res) => {
 
 router.put("/poll/:id", (req, res) => {
   console.log(req.body)
-  const query = `SELECT polls.id as id, option, ranking
+  const query = `SELECT polls.id as id, option, ranking, url as url_id, email, question
                  FROM polls
                  JOIN polls_options ON polls.id = polls_id
                  WHERE url = '${req.params.id}'`;
@@ -108,6 +108,8 @@ router.put("/poll/:id", (req, res) => {
               polls_id = $3;`, [ranking,option,poll]);
       });
       console.log("poll3", poll);
+      console.log("data.rows", data.rows);
+      sendNotification(data.rows[0])
       res.json({ poll });
     })
     .catch(err => {
