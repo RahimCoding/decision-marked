@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
-  const getOptions = function() {
-    console.log("/users" , window.location.pathname);
+  const getOptions = function () {
+    console.log("/users", window.location.pathname);
     $.ajax({
       method: "GET",
       url: "/users" + window.location.pathname
@@ -18,26 +18,27 @@ $(document).ready(function () {
       $('#sort').sortable();
 
       $("#choice").on('click', () => {
+
         const voteEmail = $('#vote-email').val();
-       if ((poll.email.includes(voteEmail) || poll.sent_email.includes(voteEmail)) && voteEmail) {
-         const s = $('#sort').sortable('toArray');
-         const sReverse = s.reverse();
-         const obj = {}
-         sReverse.forEach((element, index) => { //send to the ranking row in the polls table
-           obj[element] = index;
-         });
-         console.log(sReverse);
-         console.log("poll[o]:",poll.url);
-         console.log("obj:",obj);
-         $.ajax({
-           method: "PUT",
-           url: "/users" + window.location.pathname,
-           data: obj
-         });
-         window.location.href = `/poll/${poll.url}/result`;
+        if ((poll.email.includes(voteEmail) || poll.sent_email.includes(voteEmail)) && voteEmail) {
+          const s = $('#sort').sortable('toArray');
+          const sReverse = s.reverse();
+          const obj = {};
+          sReverse.forEach((element, index) => { //send to the ranking row in the polls table
+            obj[element] = index;
+          });
+          console.log(sReverse);
+          console.log("poll[o]:", poll.url);
+          console.log("obj:", obj);
+          $.ajax({
+            method: "PUT",
+            url: "/users" + window.location.pathname,
+            data: obj
+          });
+          window.location.href = `/poll/${poll.url}/result`;
         } else {
-        console.log(voteEmail)
-        alert('You can not vote this poll. Enter correct email')
+          console.log(voteEmail);
+          alert('You can not vote this poll. Enter correct email');
         }
 
       });

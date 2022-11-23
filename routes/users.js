@@ -7,7 +7,7 @@
 
 const express = require('express');
 const { sendMail, generateRandomString, sendPoll, sendNotification } = require('../lib/helpers.js')
-const router  = express.Router();
+const router = express.Router();
 const db = require('../db/connection');
 const poll = {
   url_id: 'sedrg4b',
@@ -15,7 +15,7 @@ const poll = {
   question: 'What movie are we watching this Friday?',
   options: ['Matrix 7', 'Interstellar 3', 'Die Hard 10'],
   receivers: ['rahimj2196@gmail.com'],
-  ranks: [1,1,1]
+  ranks: [1, 1, 1]
 };
 let newPoll = {};
 
@@ -24,15 +24,17 @@ let newPoll = {};
 });*/
 
 router.post('/poll', (req, res) => {
-  const options = [];
-  const keys = Object.keys(req.body);
-  const values = Object.values(req.body);
   console.log("req",req.body);
-  keys.forEach((element, index) => {
-    if (element.includes('opti')) {
-      options.push(values[index]);
-    }
-  });
+
+  // const options = [];
+  // const keys = Object.keys(req.body);
+  // const values = Object.values(req.body);
+  // console.log("req", req.body);
+  // keys.forEach((element, index) => {
+  //   if (element.includes('opti')) {
+  //     options.push(values[index]);
+  //   }
+  // });
 
   const receivers = req.body.receivers.split(/,\s*/g);
 
@@ -40,10 +42,11 @@ router.post('/poll', (req, res) => {
     url_id: generateRandomString(12),
     email: req.body.email,
     question: req.body.question,
-    options,
+    options: req.body.options,
     receivers
   };
-  console.log("new:" ,newPoll);
+
+  console.log("new:", newPoll);
   db.query(`INSERT INTO polls (email, question, url, sent_email) VALUES($1,$2,$3,$4) RETURNING *;`, [newPoll.email, newPoll.question, newPoll.url_id, newPoll.receivers]).then(data => {
     let pollId = data.rows[0].id;
     for (let i = 0; i < newPoll.options.length; i++) {
@@ -52,7 +55,7 @@ router.post('/poll', (req, res) => {
   });
   sendMail(newPoll);
   sendPoll(newPoll);
-  res.redirect(`/poll/${newPoll.url_id}/result`);
+  return res.status(200).json({url:`/poll/${newPoll.url_id}/result`});
 });
 
 router.get("/poll/:id", (req, res) => {
@@ -99,13 +102,13 @@ router.put("/poll/:id", (req, res) => {
     .then(data => {
       const poll = data.rows[0].id;
       data.rows.forEach((element, index) => {
-        let option = data.rows[index].option ;
+        let option = data.rows[index].option;
         let ranking = data.rows[index].ranking + parseInt(req.body[option]);
-        console.log('option: '+ Number.isInteger(data.rows[index].ranking) + ' ranking: ' + Number.isInteger(req.body[option]))
+        console.log('option: ' + Number.isInteger(data.rows[index].ranking) + ' ranking: ' + Number.isInteger(req.body[option]))
         db.query(`UPDATE polls_options
         SET ranking = $1
         WHERE option = $2 AND
-              polls_id = $3;`, [ranking,option,poll]);
+              polls_id = $3;`, [ranking, option, poll]);
       });
       console.log("poll3", poll);
       console.log("data.rows", data.rows);

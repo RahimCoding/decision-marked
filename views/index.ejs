@@ -23,31 +23,35 @@
   <body>
     <!-- Nav Bar -->
     <nav>
-      <h1> Decision Maker </h1>
+      <h1 id="home"> Decision Maker </h1>
     </nav>
-    <form class="form-container" method="POST" action="/users/poll">
+    <div class="error-message">
+      <h2 class="error-header">ERROR MESSAGE THIS IS A ERROR MESSAGE YOU MADE A ERROR LOL</h2>
+    </div>
+    <!-- <form class="form-container" method="POST" action="/users/poll"> -->
+      <form class="form-container" id="form-create-poll">
       <div class="form-group">
-        <label for="exampleFormControlInput1">Email address</label>
-        <input name="email" type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+        <label for="email-input">Email address</label>
+        <input name="email" type="email" class="form-control" id="email-input" placeholder="name@example.com">
       </div>
       <div class="form-group">
-        <label for="exampleFormControlSelect1">Ask your question?</label>
-        <input name="question" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Write question here.">
+        <label for="question-input">Ask your question?</label>
+        <input name="question" type="text" class="form-control" id="question-input" placeholder="Write question here.">
         </select>
       </div>
       <div class="form-group">
-        <label for="exampleFormControlSelect2">Choose your options!</label>
+        <label for="option-input">Choose your options!</label>
         <div id="options">
-          <input name="option1" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Option 1">
-          <input name="option2" type="text" class="form-control" id="exampleFormControlInput2" placeholder="Option 2">
+          <input name="option1" type="text" class="form-control" id="option-input" placeholder="Option 1">
+          <input name="option2" type="text" class="form-control" id="option-input" placeholder="Option 2">
         </div>
 
         <button id = "button" type="button" class="btn btn-primary">Add more options!</button>
         </select>
       </div>
       <div class="form-group">
-        <label for="exampleFormControlTextarea1">Enter the Email of the person you would like to send this poll too!</label>
-        <input name="receivers" type="text" class="form-control" id="exampleFormControlInput1" placeholder="If you would like to send to multiple users, please seperate with ','!">
+        <label for="email-input-external">Enter the Email of the person you would like to send this poll too!</label>
+        <input name="receivers" type="text" class="form-control" id="email-input-external" placeholder="If you would like to send to multiple users, please seperate with ','!">
       </div>
       <button type="submit" class="btn btn-primary">SUBMIT</button>
     </form>

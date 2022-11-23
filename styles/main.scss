@@ -9,6 +9,13 @@ nav h1 {
   text-align: center;
   color: peachpuff;
   font-size: xx-large;
+
+}
+
+#home:hover {
+  cursor: pointer;
+  font-weight: bolder;
+  font-style: italic;
 }
 
 
@@ -45,4 +52,14 @@ nav h1 {
   background: crimson;
   border: 2px solid brown;
   color: white;
+}
+
+.error-header {
+  display: flex;
+  text-align: center;
+  font-family: 'Bungee';
+  font-size: medium;
+  color: red;
+  justify-content: center;
+  visibility: hidden;
 }

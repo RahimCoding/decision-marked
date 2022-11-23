@@ -8,12 +8,14 @@ $(document).ready(function () {
     let $optionString = $(`<input class="form-control">`)
       .attr('name', 'option' + i)
       .attr('type', 'text')
-      .attr('id', 'exampleFormControlInput' + i)
-      .attr('placeholder' ,'option ' + i);
+      .attr('id', 'option-input' + i)
+      .attr('placeholder', 'option ' + i);
     $("#options").append($optionString);
   };
 
-
+  $("#home").click(function (event) {
+    window.location = "/";
+  });
 
 
   $("#button").click(function (event) {
@@ -21,7 +23,71 @@ $(document).ready(function () {
     buttonOption();
   });
 
+  $("#form-create-poll").submit(function (event) {
+    event.preventDefault();
+    const email = $('#email-input').val();
+    const question = $('#question-input').val();
+    const options = $('#options');
+    const externalEmail = $('#email-input-external').val();
+    console.log(email, question, externalEmail);
+    const numbOfOptions = options.children().length;
+    const optionsArray = [];
+    let arrayOfErrors = [];
+    // console.log(options);
+    for (let i = 0; i < numbOfOptions; i++) {
+      console.log(options.children()[i].value);
+      if (options.children()[i].value !== '') {
+        optionsArray.push(options.children()[i].value);
+      }
+    }
+    if (!email) {
+      arrayOfErrors.push("No email present");
+    }
+    if (!question) {
+      arrayOfErrors.push("No questions present");
+    }
+    if (optionsArray.length < 2) {
+      arrayOfErrors.push("please choose at least 2 options");
+    }
+    if (!externalEmail) {
+      arrayOfErrors.push("Please choose someone to send too!");
+    }
+    if (arrayOfErrors.length > 0) {
+      console.log("arrayoferrors", arrayOfErrors);
+      if (arrayOfErrors.length > 1) {
+        const lastElement = arrayOfErrors[arrayOfErrors.length - 1];
+        arrayOfErrors.splice(-1);
+        console.log("arrayoferrors", arrayOfErrors);
+        $(".error-header").css("visibility", "visible");
+        $(".error-header").text(arrayOfErrors.join(" , ") + " and " + lastElement);
+      } else {
+        $(".error-header").css("visibility", "visible");
+        $(".error-header").text(arrayOfErrors.join(""));
+      }
+      return;
+    }
+    const formData = {
+      email,
+      question,
+      options: optionsArray,
+      receivers: externalEmail
+    };
 
+    $.ajax({
+      type: "POST",
+      url: "users/poll",
+      data: formData,
+      dataType: "json",
+      encode: true,
+      success: function (data) {
+        console.log(data);
+      }
+    }).done(function (data) {
+      window.location.href = `http://localhost:8080${data.url}`;
+    });
+
+
+  });
 
 });
 
