@@ -1,9 +1,9 @@
 // Client facing scripts here
-$(document).ready(function () {
+$(document).ready(function() {
 
   let i = 2;
 
-  const buttonOption = function () {
+  const buttonOption = function() {
     i++;
     let $optionString = $(`<input class="form-control">`)
       .attr('name', 'option' + i)
@@ -13,29 +13,27 @@ $(document).ready(function () {
     $("#options").append($optionString);
   };
 
-  $("#home").click(function (event) {
+  $("#home").click(function() {
     window.location = "/";
   });
 
 
-  $("#button").click(function (event) {
+  $("#button").click(function(event) {
     event.stopPropagation();
     buttonOption();
   });
 
-  $("#form-create-poll").submit(function (event) {
+  $("#form-create-poll").submit(function(event) {
     event.preventDefault();
     const email = $('#email-input').val();
     const question = $('#question-input').val();
     const options = $('#options');
     const externalEmail = $('#email-input-external').val();
-    console.log(email, question, externalEmail);
     const numbOfOptions = options.children().length;
     const optionsArray = [];
     let arrayOfErrors = [];
     // console.log(options);
     for (let i = 0; i < numbOfOptions; i++) {
-      console.log(options.children()[i].value);
       if (options.children()[i].value !== '') {
         optionsArray.push(options.children()[i].value);
       }
@@ -53,11 +51,9 @@ $(document).ready(function () {
       arrayOfErrors.push("Please choose someone to send too!");
     }
     if (arrayOfErrors.length > 0) {
-      console.log("arrayoferrors", arrayOfErrors);
       if (arrayOfErrors.length > 1) {
         const lastElement = arrayOfErrors[arrayOfErrors.length - 1];
         arrayOfErrors.splice(-1);
-        console.log("arrayoferrors", arrayOfErrors);
         $(".error-header").css("visibility", "visible");
         $(".error-header").text(arrayOfErrors.join(" , ") + " and " + lastElement);
       } else {
@@ -79,10 +75,10 @@ $(document).ready(function () {
       data: formData,
       dataType: "json",
       encode: true,
-      success: function (data) {
+      success: function(data) {
         console.log(data);
       }
-    }).done(function (data) {
+    }).done(function(data) {
       window.location.href = `http://localhost:8080${data.url}`;
     });
 

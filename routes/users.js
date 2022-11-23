@@ -6,17 +6,10 @@
  */
 
 const express = require('express');
-const { sendMail, generateRandomString, sendPoll, sendNotification } = require('../lib/helpers.js')
+const { sendMail, generateRandomString, sendPoll, sendNotification } = require('../lib/helpers.js');
 const router = express.Router();
 const db = require('../db/connection');
-const poll = {
-  url_id: 'sedrg4b',
-  email: 'tbekishev@gmail.com',
-  question: 'What movie are we watching this Friday?',
-  options: ['Matrix 7', 'Interstellar 3', 'Die Hard 10'],
-  receivers: ['rahimj2196@gmail.com'],
-  ranks: [1, 1, 1]
-};
+
 let newPoll = {};
 
 /*router.get('/', (req, res) => {
@@ -24,7 +17,6 @@ let newPoll = {};
 });*/
 
 router.post('/poll', (req, res) => {
-  console.log("req",req.body);
 
   // const options = [];
   // const keys = Object.keys(req.body);
@@ -45,8 +37,6 @@ router.post('/poll', (req, res) => {
     options: req.body.options,
     receivers
   };
-
-  console.log("new:", newPoll);
   db.query(`INSERT INTO polls (email, question, url, sent_email) VALUES($1,$2,$3,$4) RETURNING *;`, [newPoll.email, newPoll.question, newPoll.url_id, newPoll.receivers]).then(data => {
     let pollId = data.rows[0].id;
     for (let i = 0; i < newPoll.options.length; i++) {
@@ -60,9 +50,9 @@ router.post('/poll', (req, res) => {
 
 router.get("/poll/:id", (req, res) => {
   const query = `SELECT * FROM polls
-                  INNER JOIN polls_options on polls.id = polls_id
-                  WHERE url = '${req.params.id}'
-                  ORDER BY ranking`;
+                 INNER JOIN polls_options on polls.id = polls_id
+                 WHERE url = '${req.params.id}'
+                 ORDER BY ranking`;
   db.query(query)
     .then(data => {
       const poll = data.rows;
@@ -77,9 +67,9 @@ router.get("/poll/:id", (req, res) => {
 
 router.get("/poll/:id/result", (req, res) => {
   const query = `SELECT * FROM polls
-  INNER JOIN polls_options on polls.id = polls_id
-  WHERE url = '${req.params.id}'
-  ORDER BY ranking`;
+                 INNER JOIN polls_options on polls.id = polls_id
+                 WHERE url = '${req.params.id}'
+                 ORDER BY ranking`;
   db.query(query)
     .then(data => {
       const poll = data.rows;
@@ -93,7 +83,6 @@ router.get("/poll/:id/result", (req, res) => {
 });
 
 router.put("/poll/:id", (req, res) => {
-  console.log(req.body)
   const query = `SELECT polls.id as id, option, ranking, url as url_id, email, question
                  FROM polls
                  JOIN polls_options ON polls.id = polls_id
@@ -104,15 +93,11 @@ router.put("/poll/:id", (req, res) => {
       data.rows.forEach((element, index) => {
         let option = data.rows[index].option;
         let ranking = data.rows[index].ranking + parseInt(req.body[option]);
-        console.log('option: ' + Number.isInteger(data.rows[index].ranking) + ' ranking: ' + Number.isInteger(req.body[option]))
         db.query(`UPDATE polls_options
-        SET ranking = $1
-        WHERE option = $2 AND
-              polls_id = $3;`, [ranking, option, poll]);
+                  SET ranking = $1
+                  WHERE option = $2 AND polls_id = $3;`, [ranking, option, poll]);
       });
-      console.log("poll3", poll);
-      console.log("data.rows", data.rows);
-      sendNotification(data.rows[0])
+      sendNotification(data.rows[0]);
       res.json({ poll });
     })
     .catch(err => {
@@ -121,8 +106,4 @@ router.put("/poll/:id", (req, res) => {
         .json({ error: err.message });
     });
 });
-
-
-
-
 module.exports = router;

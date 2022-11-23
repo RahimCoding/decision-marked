@@ -1,19 +1,16 @@
 // Client facing scripts here
-$(document).ready(function () {
+$(document).ready(function() {
   $('#chart').hide;
   const rendPoll = function() {
     $.ajax({
       method: "GET",
       url: "/users" + window.location.pathname
     }).done((table) => {
-      console.log("table", table);
       const poll = table.poll;
       let sum = 0;
-      console.log("poll2", poll[1].ranking);
       poll.forEach(element => {
         sum += element.ranking;
       });
-      console.log("sum,",sum);
       if (sum === 0) {
         $('body').append('<h1>Thank you! Your poll is created.</h1>');
         $('#chart').hide();
@@ -30,7 +27,7 @@ $(document).ready(function () {
         data: {
           labels: options,
           datasets: [{
-            label: '# of Votes',
+            label: '# of Points',
             data: rankings,
             borderWidth: 1
           }]
