@@ -20,12 +20,12 @@ $(document).ready(function () {
       $("#choice").on('click', () => {
         const s = $('#sort').sortable('toArray');
         const sReverse = s.reverse();
+        const obj = {}
         sReverse.forEach((element, index) => { //send to the ranking row in the polls table
-          poll.ranking[parseInt(element)] += index;
+          obj[element] = index;
         });
         console.log(sReverse);
         console.log("poll[o]:",poll.url);
-        let obj = Object.assign({}, sReverse);
         console.log("obj:",obj);
         $.ajax({
           method: "PUT",

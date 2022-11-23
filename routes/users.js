@@ -88,18 +88,23 @@ router.get("/poll/:id/result", (req, res) => {
 });
 
 router.put("/poll/:id", (req, res) => {
-  const query = `SELECT * FROM polls WHERE url = '${req.params.id}'`;
+  console.log(req.body)
+  const query = `SELECT polls.id as id, option, ranking
+                 FROM polls
+                 JOIN polls_options ON polls.id = polls_id
+                 WHERE url = '${req.params.id}'`;
   db.query(query)
     .then(data => {
       const poll = data.rows[0].id;
-      for (const key in req.body) {
-        let ranking = key + 1;
-        let option = req.body[key];
+      data.rows.forEach((element, index) => {
+        let option = data.rows[index].option ;
+        let ranking = data.rows[index].ranking + parseInt(req.body[option]);
+        console.log('option: '+ Number.isInteger(data.rows[index].ranking) + ' ranking: ' + Number.isInteger(req.body[option]))
         db.query(`UPDATE polls_options
         SET ranking = $1
         WHERE option = $2 AND
               polls_id = $3;`, [ranking,option,poll]);
-      }
+      });
       console.log("poll3", poll);
       res.json({ poll });
     })
@@ -108,7 +113,6 @@ router.put("/poll/:id", (req, res) => {
         .status(500)
         .json({ error: err.message });
     });
-  console.log(req.body);
 });
 
 
