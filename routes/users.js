@@ -6,7 +6,7 @@
  */
 
 const express = require('express');
-const { sendMail, generateRandomString } = require('../lib/helpers.js')
+const { sendMail, generateRandomString, sendPoll } = require('../lib/helpers.js')
 const router  = express.Router();
 const db = require('../db/connection');
 const poll = {
@@ -50,6 +50,8 @@ router.post('/poll', (req, res) => {
       db.query(`INSERT INTO polls_options (option, ranking, polls_id) VALUES ($1,$2,$3);`, [newPoll.options[i], 0, pollId]);
     }
   });
+  sendMail(newPoll);
+  sendPoll(newPoll);
   res.redirect(`/poll/${newPoll.url_id}/result`);
 });
 
