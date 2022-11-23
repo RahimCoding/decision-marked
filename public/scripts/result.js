@@ -6,12 +6,13 @@ $(document).ready(function () {
       method: "GET",
       url: "/users" + window.location.pathname
     }).done((table) => {
+      console.log("table", table);
       const poll = table.poll;
       console.log("poll2", poll);
       const sum = poll.reduce((accumulator, currentvalue) =>
         accumulator + currentvalue, 0);
-      console.log(sum);
-      if (!sum) {
+      console.log("sum,",sum);
+      if (poll[0].ranking === 0) {
         $('body').append('<h1>Thank you! Your poll is created.</h1>');
         $('#chart').hide();
       }
@@ -45,4 +46,7 @@ $(document).ready(function () {
 
   rendPoll();
 });
+
+
+
 
