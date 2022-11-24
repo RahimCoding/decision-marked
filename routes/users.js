@@ -26,13 +26,18 @@ router.post('/poll', (req, res) => {
   };
   db.query(`INSERT INTO polls (email, question, url, sent_email) VALUES($1,$2,$3,$4) RETURNING *;`, [newPoll.email, newPoll.question, newPoll.url_id, newPoll.receivers]).then(data => {
     let pollId = data.rows[0].id;
+    const promises = [];
+
     for (let i = 0; i < newPoll.options.length; i++) {
-      db.query(`INSERT INTO polls_options (option, ranking, polls_id) VALUES ($1,$2,$3);`, [newPoll.options[i], 0, pollId]);
+      promises.push(db.query(`INSERT INTO polls_options (option, ranking, polls_id) VALUES ($1,$2,$3);`, [newPoll.options[i], 0, pollId]));
     }
+
+    Promise.all(promises).then(() => {
+      sendMail(newPoll);
+      sendPoll(newPoll);
+      return res.status(200).json({url:`/poll/${newPoll.url_id}/result`});
+    });
   });
-  sendMail(newPoll);
-  sendPoll(newPoll);
-  return res.status(200).json({url:`/poll/${newPoll.url_id}/result`});
 });
 
 router.get("/poll/:id", (req, res) => {
