@@ -11,7 +11,7 @@ This midterm project is a full stack web application built for a group of friend
 - mailing(creation/vote notifications);
 - responsive design;
 - borda voting method
-- finally it can tweet, of course in a local JSON file.
+- chart
 
 ## Dependencies
 
