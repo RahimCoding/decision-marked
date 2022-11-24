@@ -7,7 +7,7 @@ This midterm project is a full stack web application built for a group of friend
 ![Decision Maker](./docs/dm2.png)
 ![Decision Maker](./docs/dm3.png)
 
-## Tweeter features:
+## Decision Maker features:
 - mailing(creation/vote notifications);
 - responsive design;
 - borda voting method
