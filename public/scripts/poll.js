@@ -12,7 +12,7 @@ $(document).ready(function() {
         $('#sort').append(`<li id = ${element.option}>${element.option}</li>`);
       });
       $('.poll').append(`<input name="email" type="email" id="vote-email" placeholder="name@example.com"><br>`);
-      $('.poll').append(`<button id = "choice" type = "button">Submit your results!</button>`);
+      $('.poll').append(`<button class="btn btn-outline-danger btn-lg" id = "choice" type = "button">Submit your results!</button>`);
       $('#sort').sortable();
 
       //submit results

@@ -63,3 +63,74 @@ nav h1 {
   justify-content: center;
   visibility: hidden;
 }
+
+.ui-sortable {
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ui-sortable-handle{
+  padding: 5px 5px 20px 20px;
+  margin: 10px 0;
+  font-family: 'Bungee';
+  color: aliceblue;
+  font-size: 20px;
+}
+
+#vote-email {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  padding: 10px 10px;
+  font-size: large;
+  color: white;
+  background: border-box;
+  border: 2px solid black;
+  text-align: center;
+  font-family: 'bungee';
+  border: none;
+  border-bottom: 2px solid black;
+}
+
+#choice {
+  margin: auto;
+  display: flex;
+  background: none;
+  border: 2px solid black;
+  border-radius: 20px;
+}
+
+.created-header{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-family: 'Bungee';
+  padding-top: 10vw;
+  padding-bottom: 1vw;
+  margin-left: 8vw;
+  margin-right: 8vw;
+  color: aliceblue;
+
+}
+
+.poll-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+img {
+  padding-top: 20px;
+}
+
+#instructions {
+  text-align: center;
+  font-size: large;
+  font-family: fantasy;
+  color: beige;
+  margin-left: 20vw;
+  margin-right: 20vw;
+}

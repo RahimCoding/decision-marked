@@ -14,7 +14,8 @@ $(document).ready(function() {
       });
       //if poll just created show message
       if (sum === 0) {
-        $('body').append('<h1>Thank you! Your poll is created.</h1>');
+        $('body').append('<h1 class = "created-header" >Thank you! Your poll is created.</h1>');
+        $('body').append('<img src="http://localhost:8080/images/images.png" />');
         $('#chart').hide();
       } else {
         $(`<h2>${poll[0].question}</h2>`).insertBefore('#chart');
