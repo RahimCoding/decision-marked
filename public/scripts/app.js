@@ -13,6 +13,8 @@ $(document).ready(function() {
     $("#options").append($optionString);
   };
 
+//----------------- Event listeners -----------------//
+
   $("#home").click(function() {
     window.location = "/";
   });
@@ -32,7 +34,6 @@ $(document).ready(function() {
     const numbOfOptions = options.children().length;
     const optionsArray = [];
     let arrayOfErrors = [];
-    // console.log(options);
     for (let i = 0; i < numbOfOptions; i++) {
       if (options.children()[i].value !== '') {
         optionsArray.push(options.children()[i].value);

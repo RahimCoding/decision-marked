@@ -5,6 +5,7 @@ $(document).ready(function() {
       method: "GET",
       url: "/users" + window.location.pathname
     }).done((data) => {
+      // rendering option list
       const poll = data.poll[0];
       $('.poll').append('<ol id = "sort"></ol>');
       data.poll.reverse().forEach(element => {
@@ -14,6 +15,7 @@ $(document).ready(function() {
       $('.poll').append(`<button id = "choice" type = "button">Submit your results!</button>`);
       $('#sort').sortable();
 
+      //submit results
       $("#choice").on('click', () => {
 
         const voteEmail = $('#vote-email').val();
@@ -21,7 +23,7 @@ $(document).ready(function() {
           const s = $('#sort').sortable('toArray');
           const sReverse = s.reverse();
           const obj = {};
-          sReverse.forEach((element, index) => { //send to the ranking row in the polls table
+          sReverse.forEach((element, index) => {
             obj[element] = index;
           });
           $.ajax({

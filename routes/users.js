@@ -12,21 +12,8 @@ const db = require('../db/connection');
 
 let newPoll = {};
 
-/*router.get('/', (req, res) => {
-  res.render('users');
-});*/
-
+//create new poll
 router.post('/poll', (req, res) => {
-
-  // const options = [];
-  // const keys = Object.keys(req.body);
-  // const values = Object.values(req.body);
-  // console.log("req", req.body);
-  // keys.forEach((element, index) => {
-  //   if (element.includes('opti')) {
-  //     options.push(values[index]);
-  //   }
-  // });
 
   const receivers = req.body.receivers.split(/,\s*/g);
 
@@ -81,7 +68,7 @@ router.get("/poll/:id/result", (req, res) => {
         .json({ error: err.message });
     });
 });
-
+// updating poll results
 router.put("/poll/:id", (req, res) => {
   const query = `SELECT polls.id as id, option, ranking, url as url_id, email, question
                  FROM polls

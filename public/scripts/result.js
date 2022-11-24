@@ -1,6 +1,7 @@
 // Client facing scripts here
 $(document).ready(function() {
   $('#chart').hide;
+  // poll page rendering
   const rendPoll = function() {
     $.ajax({
       method: "GET",
@@ -11,6 +12,7 @@ $(document).ready(function() {
       poll.forEach(element => {
         sum += element.ranking;
       });
+      //if poll just created show message
       if (sum === 0) {
         $('body').append('<h1>Thank you! Your poll is created.</h1>');
         $('#chart').hide();
@@ -22,6 +24,7 @@ $(document).ready(function() {
           options.push(element.option);
         rankings.push(element.ranking);
       }
+      //chart rendering
       const ctx = $('#chart');
       new Chart(ctx, {
         type: 'bar',
